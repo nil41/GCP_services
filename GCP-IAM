@@ -1,0 +1,57 @@
+IAM-GCP:-
+
+-Google Cloud Identity and Access Management (Cloud IAM) enables you to create and manage permissions for Google Cloud Platform resources.
+
+-Project owners can grant access / IAM roles to project members (user accounts), groups, service accounts.
+
+-here we can not creates user accounts like aws, but we can use users gmail id to add/ assign roles to users w.r.t. projects.
+ so any user can be viewer, project editor, storage admin or we can assing multiple roles or may be custome roles.
+we can also use Cloud Identity (IAM-> Identity) to create users.
+
+-Creating and Managing Custom Roles is in Beta version.
+
+------------
+Cloud Identity:-
+
+-Cloud Identity is an Identity as a Service (IDaaS) solution that allows you to centrally manage users and groups who can access cloud resources.
+
+-If developers in your organization use non-managed consumer accounts (like personal Gmail accounts) for work purposes, those accounts are outside of your control. When you migrate those users to Cloud Identity accounts, you can manage access and compliance across all users in your domain.
+
+-Cloud Identity provides free identity services for users who don't need G Suite Services like Gmail or Drive. When you migrate to Cloud Identity, you create a free account for each of your users and you can manage all users from the Google Admin console.
+
+IAM-> Identity
+
+-Cloud Identity will allow you to manage your enterprise identities (e.g. your company email id) and cloud resources on Google Cloud Platform.
+-it needs domain name also.
+-----------------------------------
+-To use a service account outside of the Google Cloud Platform (on other platforms or on premise), you must establish the identity of the service account. Public/private key pairs will let you do that.
+
+-Take note of your service account's email address and store the service accounts private key file in a location accessible to your application. Your application needs them to make authenticated API calls.
+
+-If you delete a key, your application will no longer be able to access Cloud Platform resources using that key. A security best practice is to rotate your service account keys regularly. You can rotate a key by creating a new key, switching applications to use the new key and then deleting old key.
+
+-G Suite domain represents a virtual group of all the members in an organization. G Suite customers can associate their email accounts with an Internet domain name. When you do this, each email account takes the form username@yourdomain.com. You can specify an identity by using any Internet domain name that is associated with a G Suite account.
+
+-Cloud Identity domain is like a G Suite domain because it represents a virtual group of all members in an organization. However, Cloud Identity domain users don't have access to G Suite applications and features.
+------------------------------------
+
+-we can assign persmissions to roles  and  then we assign role to user/service/group.
+
+-IAM roles granted at this level are inherited by all resources under the organization.
+-IAM roles granted at the project level are inherited by resources within that project.
+-we can grant role to resources as well.
+------------------------------------
+-Permissions determine what operations are allowed on a resource. In the IAM world, permissions are represented in the form of <service>.<resource>.<verb>, for example compute.instances.get. A role is a collection of permissions. You cannot assign a permission to the user directly; instead you grant them a role. When you grant a role to a user, you grant them all the permissions that the role contains.
+
+
+
+
+to continue from Resources Section from left side
+https://cloud.google.com/iam/docs/support
+
+
+
+
+
+
+

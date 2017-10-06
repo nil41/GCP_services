@@ -1,0 +1,36 @@
+GSC bucket logs-
+
+
+project name= test-2-179209
+bucket to store logs= log-bucket-nil
+bucket of logs= t-bucket-1 (we can use other project bucket also, need to be member/part of org)
+
+
+1. create bucket to store logs-
+gsutil mb gs://log-bucket-nil
+
+2. assign write permission to cloud-storage-analytics group-
+gsutil acl ch -g cloud-storage-analytics@google.com:W gs://log-bucket-nil
+
+3. t-bucket-1
+gsutil defacl set project-private gs://log-bucket-nil
+
+4. give log prefix () and bucket name whoes logs we want to collect-
+gsutil logging set on -b gs://log-bucket-nil -o t-bucket-1-logs gs://t-bucket-1
+
+---------
+5. checking logging status-
+gsutil logging get gs://t-bucket-1
+
+it shows following message-
+{"logBucket": "example-logs-bucket", "logObjectPrefix": "log_object_prefix"}
+
+6. you can get logs-
+go to logs bucket, see list of logs, click on latest log, it will open/ download the log.
+
+2 types of logs- 1. access logs (may be created hourly) 2. storage logs (once in a day) to get bucket size, divide value by 24
+
+====================
+Ref:- https://cloud.google.com/storage/docs/access-logs
+
+
