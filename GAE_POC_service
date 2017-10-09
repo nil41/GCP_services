@@ -1,0 +1,67 @@
+GAE for flikart and azamon (2 sites) as a service:-
+
+1. install SDK
+2. install gcloud
+3. install dev_appserver.py  (to test app engine locally on ubuntu)
+
+create 2 folders       1.azamon   2.flipkart
+
+for flikart:-
+goto flikart folder
+create 2 files 1. app.yaml   2.main.py 
+
+-----app.yaml-----------
+runtime: python27
+api_version: 1
+threadsafe: true
+service: flikart       //name of application
+
+handlers:
+- url: /.*
+  script: main.app
+-------------------------
+-------main.py-----------
+import webapp2
+
+class MainPage(webapp2.RequestHandler):
+    def get(self):
+        self.response.headers['Content-Type'] = 'text/plain'
+        self.response.write('Flikart')
+
+
+app = webapp2.WSGIApplication([
+    ('/', MainPage),
+], debug=True)
+-------------------------
+to test this locally (goto flikart folder):-
+#/home/nil/google-cloud-sdk/bin/dev_appserver.py app.yaml
+
+localhost:8080
+
+it will show flikart
+
+=====================================================================
+to deploy on App Engine:-
+
+#gcloud init
+ select account, project, region
+
+**App engine in project should be enabled**
+(goto flikart folder)
+
+#gcloud app deploy --project=projectname-id --version=dev
+
+check and confirm output->
+
+descriptor:      [/home/nil/my_app_engine_demo/flikart/app.yaml]
+source:          [/home/nil/my_app_engine_demo/flikart]
+target project:  [project]
+target service:  [flikart]
+target version:  [dev]
+target url:      [https://flikart-dot-project.appspot.com]
+
+then goto project and check for services, flikart will shows in service.
+
+###############################################################################
+do same for azamon.
+###############################################################################
