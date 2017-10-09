@@ -1,0 +1,71 @@
+Datastore (DS) POC on Exporting and Importing Entities-(migration)
+
+Objective:- importing/exporting entities (w.r.t. Namespace- all kinds in namespace) between different projects (test2 to test1) using bucket.
+
+test-2      (project)
+  | [default]    (namespace)
+      |   CUSTOMER    (kind)
+      |    TESTING    (kind)
+
+
+
+
+test-1      (project)
+  |       nothing is there before importing
+
+
+----------------------------
+Ref:- https://cloud.google.com/datastore/docs/export-import-entities
+
+
+**App Engine should be enabled.**
+
+1. need to add following 2 permissions (create role-> add permissions  then add this role to user of both projects account)
+
+ datastore.databases.export     and    datastore.databases.import
+
+Alternatively, assign the Cloud Datastore Import Export Admin role.
+
+
+2. assgin app engine permissions to bucket for storage.
+
+Set up your environment-:   (#gcloud init    //you should be in test-1)
+
+3.  #PROJECT_ID="YOUR_PROJECT_ID"                 //test-2-834483
+    #gcloud config set project ${PROJECT_ID}
+    #gcloud auth login  
+    #BUCKET="YOUR_BUCKET_NAME"                // name of the bucket in test-1
+
+ all are set as default
+
+----------
+Exporting entities-:
+
+-A recommended practice before you export entities is to disable Cloud Datastore writes. After the export is complete, re-enable Cloud Datastore writes for your application.
+
+
+4. #gcloud beta datastore export --namespaces="(default)" gs://${BUCKET}
+         //To export all kinds in the default namespace
+
+  OR
+   #gcloud beta datastore export --kinds="KIND1, KIND2" --namespaces="NAMESPACE1,NAMESPACE2" gs://${BUCKET}
+          //To export a specific subset of kinds and/or namespaces
+NOTE:- do not give spaces
+
+-check into bucket, some data will be added.
+
+----------
+Importing entities-:      (#gcloud init    //you should be in test-2)
+
+-A recommended practice before you import entities is to disable Cloud Datastore writes. After the import is complete, re-enable Cloud Datastore writes for your application.
+
+5. #gcloud beta datastore import gs://${BUCKET}/2017-09-20T13:30:33_1136/2017-09-20T13:30:33_1136.overall_export_metadata
+
+
+("2017-09-20T13:30:33_1136/2017-09-20T13:30:33_1136.overall_export_metadata" for that goto bucket and see the path/name, it is different for each export/import)
+
+
+###############################################################################
+
+  
+
