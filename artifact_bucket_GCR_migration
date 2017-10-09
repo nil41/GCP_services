@@ -1,0 +1,49 @@
+migration of artifact.******.appspot.com buckets between projects.
+
+2 projects test-1 test-2
+-------
+test-1 have artifact.test-1.appspot.com   that contain php img. also check into its GCR.
+test-2 dont have any artifact bucket.
+so to create artifact bucket, need to upload any raw image to GCR of test-2.
+so to do that,
+#gcloud init  -> login to test-2 project
+
+install docker on local machine.
+1. create directory, go into that
+2. vi Dockerfile    =>    FROM ubuntu:12.04
+3. docker build -t my-ubuntu-image .
+4. docker tag my-ubuntu-image gcr.io/test-2-179209/my-ubuntu-image
+5. gcloud docker -- push gcr.io/test-2-179209/my-ubuntu-image
+
+Ref:- https://cloud.google.com/container-registry/docs/pushing-and-pulling
+- you can also create based on regions also, e.g. us.gcr.io hosts your images in the United States
+
+now artifact bucket will be creates in test-2.
+you can also check for image in GCR of test-2.
+
+now to move all images from test-1 to test-2
+
+#gsutil cp -r gs://artifacts.test-1-179209.appspot.com/containers/* gs://artifacts.test-2-179209.appspot.com/containers/
+
+so all bucket files are copied from test-1 to test-2.
+
+goto test-2 GCR and see images from test-1 are copied here.
+
+========================
+ more commands:-
+#sudo gcloud docker -- pull gcr.io/test-2-179209/my-php-image   
+
+#sudo gcloud container images list
+
+#sudo gcloud container images list --repository gcr.io/test-2-179209
+
+If you just want to make all your images readable to the entire world, then the command from this other StackOverflow answer should help: 
+gsutil -m acl -r set public-read gs://bucket-name
+gsutil -m defacl set public-read gs://bucket-name
+=========================
+           VIMP
+Deploying GCR image to App Engine
+Ref:- https://cloud.google.com/container-registry/docs/using-with-google-cloud-platform
+
+=========================
+
