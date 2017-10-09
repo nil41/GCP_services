@@ -1,0 +1,39 @@
+BQ POC- copy tabale through cmd line:-
+
+test-1     (project)
+  poc_dataset     (dataset)
+       poc_table       (table)
+
+test-2      (project)
+  poc_dataset      (dataset)
+       poc_table       (table)
+
+=====================================
+
+1. 'bq' is a python-based tool that accesses BigQuery from the command line.
+   download and install it from google site.
+
+2. install SDK
+
+3. Ref:- https://cloud.google.com/bigquery/bq-command-line-tool
+
+
+
+#bq shell                            //then select project, which will not changed
+ 
+
+>>mk poc_dataset             // to create dataset, dataset names are uniqe project            
+
+>>mk --schema id:integer,name:string -t poc_dataset.poc_table  //to create empty table
+
+>>cp poc_dataset.poc_table poc_dataset.poc_table_2   //to copy table within same project, table names are uniqe within dataset
+
+
+>>cp test-1-176710:poc_dataset.poc_table test-2-179209:poc_dataset.poc_table  //to copy table within different projects, you can give same names for dataset and table of different project.
+
+format:-
+cp project1_id:dataset_name.table_name project2_id:dataset_name.table_name
+
+##########################################################################################  
+OR you can do this by using simple console by selecting "copy" option of table.
+
