@@ -1,0 +1,38 @@
+-Virtual machine (VM) instances in a VPC network can communicate with instances in all other subnets of the same VPC network, regardless of region, using their RFC1918 private IP addresses. 
+
+-Subnets vs. subnetworks are same things
+
+-All networks have automatically created routes to the Internet (default route) and to the IP ranges in the network.
+
+-Each network has its own firewall.
+
+-All traffic to instances, even from other instances, is blocked by the firewall unless firewall rules are created to allow it.
+
+-The default network has automatically created firewall rules that are shown in default firewall rules.
+
+-No manually created network has automatically created firewall rules except for a default "allow" rule for outgoing traffic and a default "deny" for incoming traffic.
+
+-If you are communicating between instances in the same VPC network, you can send packets to an instance using the instance name, and the VPC network automatically resolves the name to the internal IP address of the instance.
+
+-Using the instance name rather than the internal IP address is useful because the internal IP addresses can change each time an instance is deleted and recreated.
+
+-Multiple network interfaces enable you to create configurations in which an instance connects directly to several VPC networks.
+
+-Each of the interfaces must have an internal IP address, and each interface can also have an external IP address. 
+
+-Each instance can have up to 8 interfaces, depending on the instance's type.
+
+-Use multiple network interfaces when an individual instance needs access to more than one VPC network, but you don't want to connect both networks directly.
+
+-Each instance can only belong to one network.
+
+-When an internal DNS query is made with the instance hostname, it resolves to the primary interface (nic0) of the instance.
+
+-If the nic0 interface of the instance belongs to a VPC network different from the VPC network of the instance issuing the internal DNS query, the query will fail.
+
+-Each VPC network has its own firewall controlling access to the instances.
+
+-All instances are configured with a "hidden" firewall rule that drops TCP connections after 10 minutes of inactivity. You can change it by configure TCP keep-alives to prevent connections from being dropped.
+
+-
+#################################################################
